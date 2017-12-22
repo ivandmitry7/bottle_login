@@ -2,6 +2,7 @@ from bottle import app, HTTPResponse, request, response, route, run, static_file
 from beaker.middleware import SessionMiddleware
 import bcrypt
 import redis
+import time
 
 
 session_opts = {
@@ -60,6 +61,15 @@ def check_login(username, password):
         return True
     else:
         return False
+
+
+@route("/yield", method="GET")
+def return_yield():
+    yield "<p>return yield 1</p>"
+    time.sleep(5)
+    yield "<p>return yield 2</p>"
+    time.sleep(5)
+    yield "<p>return yield 3</p>"
 
 
 @error(404)
